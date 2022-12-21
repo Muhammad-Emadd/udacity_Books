@@ -1,0 +1,88 @@
+const api = "https://reactnd-books-api.udacity.com";
+
+let token = localStorage.token;
+
+if (!token) token = localStorage.token = Math.random().toString(36).substr(-8);
+
+const headers = {
+  Accept: "application/json",
+  Authorization: token,
+};
+
+export const get = (bookId) =>
+  fetch(`${api}/books/${bookId}`, { headers })
+    .then((res) => res.json())
+    .then((data) => data.book);
+
+export const getAll = () =>
+  fetch(`${api}/books`, { headers })
+    .then((res) => res.json())
+    .then((data) => data.books);
+
+export const update = (book, shelf) =>
+  fetch(`${api}/books/${book.id}`, {
+    method: "PUT",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ shelf }),
+  }).then((res) => res.json());
+
+export const search = (query, maxResults) =>
+  fetch(`${api}/search`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query, maxResults }),
+  })
+    .then((res) => res.json())
+    .then((data) => data.books);
+
+//
+//
+//
+//
+//
+//
+
+//% if (enteredFilter === inputRef.current.value) {
+//   const query =
+//     enteredFilter.length === 0
+///       ? ""
+//       : `?orderBy="title"&equalTo="${enteredFilter}"`;
+//   fetch("https://react-hooks-update.firebaseio.com/ingredients.json" + query)
+//     .then((response) => response.json())
+//     .then((responseData) => {
+//       const loadedIngredients = [];
+//       for (const key in responseData) {
+//         loadedIngredients.push({
+//           id: key,
+//           title: responseData[key].title,
+//           amount: responseData[key].amount,
+//         });
+//       }
+//       onLoadIngredients(loadedIngredients);
+//     });
+// % }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+export const wordsStartUpperCase = (theWord) =>
+  theWord
+    .split(/(?=[A-Z])/)
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
