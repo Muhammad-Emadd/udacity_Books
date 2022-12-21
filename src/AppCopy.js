@@ -4,6 +4,7 @@ import { getAll } from "./util/BooksAPI";
 import BookShelf from "./components/BookShelf";
 import BookShelfChanger from "./components/BookShelfChanger";
 import BookShelfList from "./components/BookShelfList";
+import { Link } from "react-router-dom";
 
 function AppCopy() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -61,50 +62,17 @@ function AppCopy() {
   );
   return (
     <div className="app">
-      {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <a
-              className="close-search"
-              onClick={() => setShowSearchpage(!showSearchPage)}
-            >
-              Close
-            </a>
-            <div className="search-books-input-wrapper">
-              <input
-                type="text"
-                placeholder="Search by title, author, or ISBN"
-              />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid"></ol>
-          </div>
+      <div className="list-books">
+        <div className="list-books-title">
+          <h1>MyReads</h1>
         </div>
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            {/* {userBooks.length > 0 ? (
-                <BookShelf shelfName={"a7a"} bookList={userBooks}>
-                  <BookShelfChanger
-                    selectLabel={"add"}
-                    changeShelfHandler={changeShelf}
-                  />
-                </BookShelf>
-              ) : (
-                ""
-              )} */}
-
-            <BookShelfList books={userBooks} shelfs={shelfIds} />
-          </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
+        <div className="list-books-content">
+          <BookShelfList books={userBooks} shelfs={shelfIds} />
         </div>
-      )}
+        <div className="open-search">
+          <Link to={`search`}>Add a book</Link>
+        </div>
+      </div>
     </div>
   );
 }

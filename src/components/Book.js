@@ -1,6 +1,8 @@
 import React from "react";
 
 function Book({ authors, title, imageLinks, children }) {
+  console.log(title);
+
   return (
     <li>
       <div className="book">
@@ -10,13 +12,13 @@ function Book({ authors, title, imageLinks, children }) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${imageLinks.thumbnail})`,
+              backgroundImage: `url(${imageLinks ? imageLinks.thumbnail : ""})`,
             }}
-          ></div>
+          />
           {children}
         </div>
-        <div className="book-title">{`${title}`}</div>
-        <div className="book-authors">{`${authors[0]}`}</div>
+        <div className="book-title">{`${title ? title : ""}`}</div>
+        <div className="book-authors">{`${authors ? authors[0] : ""}`}</div>
       </div>
     </li>
   );

@@ -1,52 +1,60 @@
 import React, { useState, useEffect, useRef } from "react";
-const Search = React.memo((props) => {
-  const { onLoadIngredients } = props;
+import { search } from "../util/BooksAPI";
+import Book from "./Book";
+import BookShelfChanger from "./BookShelfChanger";
+const Search = React.memo(() => {
   const [enteredFilter, setEnteredFilter] = useState("");
+  const [searchBooks, setSearchBooks] = useState([]);
   const inputRef = useRef();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (enteredFilter === inputRef.current.value) {
-        const query =
-          enteredFilter.length === 0
-            ? ""
-            : `?orderBy="title"&equalTo="${enteredFilter}"`;
-        fetch(
-          "https://react-hooks-update.firebaseio.com/ingredients.json" + query
-        )
-          .then((response) => response.json())
+      if (enteredFilter === inputRef.current.value && enteredFilter.length) {
+        search(enteredFilter, 20)
           .then((responseData) => {
-            const loadedIngredients = [];
-            for (const key in responseData) {
-              loadedIngredients.push({
-                id: key,
-                title: responseData[key].title,
-                amount: responseData[key].amount,
-              });
+            if (responseData.length > 0) {
+              const loadedBooks = [];
+              responseData?.forEach(
+                ({ title, id, shelf, authors, imageLinks }) =>
+                  loadedBooks.push({ title, id, shelf, authors, imageLinks })
+              );
+              setSearchBooks(loadedBooks);
             }
-            onLoadIngredients(loadedIngredients);
-          });
+          })
+          .catch((error) => {});
       }
     }, 500);
     return () => {
       clearTimeout(timer);
     };
-  }, [enteredFilter, onLoadIngredients, inputRef]);
+  }, [enteredFilter, setSearchBooks, inputRef]);
 
   return (
-    <section className="search">
-      <Card>
-        <div className="search-input">
-          <label>Filter by Title</label>
+    <div className="search-books">
+      <div className="search-books-bar">
+        <a className="close-search">Close</a>
+        <div className="search-books-input-wrapper">
           <input
             ref={inputRef}
             type="text"
             value={enteredFilter}
             onChange={(event) => setEnteredFilter(event.target.value)}
+            placeholder="Search by title, author, or ISBN"
           />
         </div>
-      </Card>
-    </section>
+      </div>
+      <div className="search-books-results">
+        <ol className="books-grid">
+          {searchBooks.length > 0
+            ? searchBooks.map((book, i) => (
+                <Book key={i} {...book}>
+                  <BookShelfChanger />
+                </Book>
+              ))
+            : ""}
+        </ol>
+      </div>
+    </div>
   );
 });
 
