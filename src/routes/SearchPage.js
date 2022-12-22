@@ -54,6 +54,7 @@ const Search = React.memo(({ handleshelfIds }) => {
                   <BookShelfChanger
                     bookId={book.id}
                     changeShelfHandler={handleshelfIds}
+                    bookShelf={"none"}
                   />
                 </Book>
               ))

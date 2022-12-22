@@ -12,20 +12,12 @@ function BookShelf({ bookList, shelf, changeShelfHandler }) {
             <Book key={i} {...book}>
               <BookShelfChanger
                 changeShelfHandler={changeShelfHandler}
-                shelf={shelf}
                 bookId={book.id}
+                bookShelf={book.shelf}
               />
             </Book>
           ))
-      : bookList.map((book, i) => (
-          <Book key={i} {...book}>
-            <BookShelfChanger
-              changeShelfHandler={changeShelfHandler}
-              shelf={shelf}
-              bookId={book.id}
-            />
-          </Book>
-        ));
+      : "";
   return <ol className="books-grid">{booksUi}</ol>;
 }
 

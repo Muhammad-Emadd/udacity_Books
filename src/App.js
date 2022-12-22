@@ -16,8 +16,10 @@ function App() {
       const newShelfs = Object.entries(res).map(([key, value]) => {
         return { [key]: value };
       });
+      console.log("waee");
+
       setShelfIds(newShelfs);
-      setGetDataFromApi(true);
+      setGetDataFromApi((prevState) => !prevState);
     });
   };
   useCallback(
@@ -35,9 +37,9 @@ function App() {
         });
         setUserBooks(loadedBooks);
         setShelfIds(loadedShelfIds);
+        setGetDataFromApi(false);
       });
-    }, [setShelfIds, getDataFromApi]),
-    [getDataFromApi]
+    }, [getDataFromApi])
   );
   const mainRouter = createBrowserRouter([
     {

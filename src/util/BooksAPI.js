@@ -41,46 +41,6 @@ export const search = (query, maxResults) =>
     .then((res) => res.json())
     .then((data) => data.books);
 
-//
-//
-//
-//
-//
-//
-
-//% if (enteredFilter === inputRef.current.value) {
-//   const query =
-//     enteredFilter.length === 0
-///       ? ""
-//       : `?orderBy="title"&equalTo="${enteredFilter}"`;
-//   fetch("https://react-hooks-update.firebaseio.com/ingredients.json" + query)
-//     .then((response) => response.json())
-//     .then((responseData) => {
-//       const loadedIngredients = [];
-//       for (const key in responseData) {
-//         loadedIngredients.push({
-//           id: key,
-//           title: responseData[key].title,
-//           amount: responseData[key].amount,
-//         });
-//       }
-//       onLoadIngredients(loadedIngredients);
-//     });
-// % }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 export const wordsStartUpperCase = (theWord) =>
   theWord
     .split(/(?=[A-Z])/)
