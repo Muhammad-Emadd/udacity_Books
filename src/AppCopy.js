@@ -1,8 +1,6 @@
 import "./App.css";
 import { useCallback, useEffect, useState } from "react";
 import { getAll, update } from "./util/BooksAPI";
-import BookShelf from "./components/BookShelf";
-import BookShelfChanger from "./components/BookShelfChanger";
 import BookShelfList from "./components/BookShelfList";
 import { Link } from "react-router-dom";
 
