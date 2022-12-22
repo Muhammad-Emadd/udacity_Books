@@ -1,46 +1,23 @@
 import "./App.css";
 import { useCallback, useEffect, useState } from "react";
-import { getAll } from "./util/BooksAPI";
+import { getAll, update } from "./util/BooksAPI";
 import BookShelf from "./components/BookShelf";
 import BookShelfChanger from "./components/BookShelfChanger";
 import BookShelfList from "./components/BookShelfList";
 import { Link } from "react-router-dom";
 
 function AppCopy() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [userBooks, setUserBooks] = useState([]);
-  const [shelf, setShelf] = useState("");
   const [shelfIds, setShelfIds] = useState([]);
 
-  const bookShelfsList = function (allBooksData) {
-    return allBooksData.reduce((shelfsNameArr, book) => {
-      if (shelfsNameArr.findIndex((el) => el[book.shelf]) < 0) {
-        return [...shelfsNameArr, { [book.shelf]: [book.id] }];
-      } else {
-        shelfsNameArr
-          .find((shelf) => shelf[book.shelf])
-          [book.shelf].push(book.id);
-        return shelfsNameArr;
-      }
-    }, []);
+  const handleshelfIds = function (shelf, id) {
+    update(id, shelf).then((res) => {
+      const newShelfs = Object.entries(res).map(([key, value]) => {
+        return { [key]: value };
+      });
+      setShelfIds(newShelfs);
+    });
   };
-  const bookShelfsLis = function (allBooksData) {
-    return allBooksData.map((shelfsNameArr, book) => {
-      if (shelfsNameArr.findIndex((el) => el[book.shelf]) < 0) {
-        return [...shelfsNameArr, { [book.shelf]: [book.id] }];
-      } else {
-        shelfsNameArr
-          .find((shelf) => shelf[book.shelf])
-          [book.shelf].push(book.id);
-        return shelfsNameArr;
-      }
-    }, []);
-  };
-
-  function changeShelf(shelfName) {
-    setShelf(shelfName);
-    console.log(shelfName);
-  }
 
   useCallback(
     useEffect(() => {
@@ -67,7 +44,11 @@ function AppCopy() {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <BookShelfList books={userBooks} shelfs={shelfIds} />
+          <BookShelfList
+            changeShelfHandler={handleshelfIds}
+            books={userBooks}
+            shelfs={shelfIds}
+          />
         </div>
         <div className="open-search">
           <Link to={`search`}>Add a book</Link>

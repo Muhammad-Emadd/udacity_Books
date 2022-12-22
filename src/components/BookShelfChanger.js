@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-function BookShelfChanger({ selectLabel, changeShelfHandler }) {
-  // const [shelfHandler,setShelfHandler]= useState('');
+function BookShelfChanger({ selectLabel, changeShelfHandler, shelf, bookId }) {
+  console.log(shelf, bookId);
 
-  // useEffect(() =>{},[shelfHandler]);
   return (
     <div className="book-shelf-changer">
-      <select onChange={(e) => changeShelfHandler(e.target.value)}>
+      <select onChange={(e) => changeShelfHandler(e.target.value, bookId)}>
         <option value="none" disabled>
           {`${selectLabel}`}
         </option>

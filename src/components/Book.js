@@ -1,8 +1,6 @@
 import React from "react";
 
 function Book({ authors, title, imageLinks, children }) {
-  console.log(title);
-
   return (
     <li>
       <div className="book">
