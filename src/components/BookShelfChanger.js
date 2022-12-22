@@ -1,8 +1,6 @@
 import React from "react";
 
 function BookShelfChanger({ selectLabel, changeShelfHandler, shelf, bookId }) {
-  console.log(shelf, bookId);
-
   return (
     <div className="book-shelf-changer">
       <select onChange={(e) => changeShelfHandler(e.target.value, bookId)}>

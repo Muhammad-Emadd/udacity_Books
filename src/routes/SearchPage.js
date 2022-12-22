@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { search } from "../util/BooksAPI";
-import Book from "./Book";
-import BookShelfChanger from "./BookShelfChanger";
-const Search = React.memo(() => {
+import Book from "../components/Book";
+import BookShelfChanger from "../components/BookShelfChanger";
+const Search = React.memo(({ handleshelfIds }) => {
   const [enteredFilter, setEnteredFilter] = useState("");
   const [searchBooks, setSearchBooks] = useState([]);
   const inputRef = useRef();
@@ -33,14 +33,9 @@ const Search = React.memo(() => {
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a
-          className="close-search"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
+        <Link to="/" relative="path" className="close-search">
           Close
-        </a>
+        </Link>
         <div className="search-books-input-wrapper">
           <input
             ref={inputRef}
@@ -56,7 +51,10 @@ const Search = React.memo(() => {
           {searchBooks.length > 0
             ? searchBooks.map((book, i) => (
                 <Book key={i} {...book}>
-                  <BookShelfChanger bookId={book.id} />
+                  <BookShelfChanger
+                    bookId={book.id}
+                    changeShelfHandler={handleshelfIds}
+                  />
                 </Book>
               ))
             : ""}

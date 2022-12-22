@@ -3,6 +3,8 @@ import { wordsStartUpperCase } from "../util/BooksAPI";
 import BookShelf from "./BookShelf";
 
 function BookShelfList({ shelfs, books, changeShelfHandler }) {
+  console.log(shelfs);
+
   return shelfs.map((shelf, i) => {
     const shelfUi = wordsStartUpperCase(Object.keys(shelf)[0]);
     return (
